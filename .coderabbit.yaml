@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
+#
+# Org-wide CodeRabbit defaults for the arbiterForge organization.
+#
+# This file belongs at the root of a repository named exactly `coderabbit`
+# in the arbiterForge org. CodeRabbit reads it as the central configuration
+# and applies it to every repo in the org that does not override it.
+#
+# PRECEDENCE, highest first (CodeRabbit cloud):
+#   0. Workspace global overrides      (Enterprise only)
+#   1. Organization global overrides   (dashboard: Org Settings -> Global Overrides)
+#   2. A repository's own .coderabbit.yaml
+#   3. THIS FILE                       (central YAML, the `coderabbit` repo)
+#   4. Repository UI settings
+#   5. Organization UI settings
+#   6. Workspace UI settings           (Enterprise only)
+#   7. CodeRabbit schema defaults
+#
+# Global overrides (0 and 1) apply as the final layer after the inheritance
+# chain resolves, so they are never affected by what any repo sets.
+#
+# IMPORTANT: a repo that adds its own .coderabbit.yaml REPLACES this file
+# entirely unless that file sets `inheritance: true`. codeArbiter's config
+# sets it; any new repo config must too, or it silently loses these defaults.
+#
+# SCOPE: deliberately no path_filters and no path_instructions. Merge semantics
+# are documented and would work here (objects deep-merge; arrays take the
+# child's items first, then unique parent items; scalars take the child's), but
+# paths are repo-specific: a pattern that is precise in one repo is noise in the
+# next. Per-repo path rules belong in the repo.
+
+language: en-US
+
+tone_instructions: >-
+  Be terse and specific. Lead with the defect and the concrete failure it
+  causes, not with preamble or praise. State findings as claims that can be
+  checked, and cite the file and line that supports each one. Where a finding
+  is a guess rather than something you verified in the diff, say so plainly
+  rather than asserting it. Do not soften a real problem, and do not inflate a
+  preference into a problem. Skip compliments entirely.
+
+reviews:
+  # Pinned rather than left implicit. `chill` is the current CodeRabbit
+  # default, but vendor defaults move — this repo's own audit found the
+  # documented default had already changed once — so the intended value is
+  # recorded here rather than inherited silently.
+  profile: chill
+
+  poem: false
+  in_progress_fortune: false
+
+  # Findings are advisory. Merge blocking is this org's own CI's job, and a
+  # review bot that can block merges becomes a gate nobody voted for.
+  request_changes_workflow: false
+  fail_commit_status: false
+
+  high_level_summary: true
+  collapse_walkthrough: true
+
+  auto_review:
+    enabled: true
+    # Drafts are work in progress; reviewing them spends budget on code that
+    # is expected to change before it is ready.
+    drafts: false
+
+knowledge_base:
+  learnings:
+    # Learnings stay scoped to the repo that produced them. These repos differ
+    # enough in purpose that a lesson from one is not automatically a rule for
+    # another.
+    scope: local
