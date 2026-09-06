@@ -44,3 +44,24 @@ excludes vendored trees.
 Comment `@coderabbitai configuration` on any pull request. CodeRabbit replies with the fully
 resolved config and the **source of each setting**, which is the only reliable way to confirm a
 change here actually reached a repo. The file existing is not evidence that it applied.
+
+## Validating changes locally
+
+The validator lock supports Linux x86_64 with CPython 3.13 or 3.14. Install it into a temporary
+directory so it does not alter a project environment, then run the same checks as CI:
+
+```sh
+validator_dir="$(mktemp -d)"
+python3 -m pip install --require-hashes --only-binary=:all: \
+  --target "$validator_dir" -r .github/requirements/coderabbit-validator.txt
+PYTHONPATH="$validator_dir" python3 -m unittest discover -s tests -v
+PYTHONPATH="$validator_dir" python3 scripts/validate_coderabbit.py .coderabbit.yaml
+```
+
+The editor annotation uses CodeRabbit's canonical schema URL. The guard downloads the same bytes
+from CodeRabbit's original public asset at
+`https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json`, avoiding the canonical
+redirect's browser-oriented WAF. It accepts only bytes with SHA-256
+`8c34e033182463bd4f2a823b144077cb21cc327927fb82ce49791bdae2b9da13`. Retrieval failure or schema
+drift fails validation without a fallback. To adopt a vendor schema revision, review the complete
+new schema, update the digest in the validator and regression test, and rerun all checks.
