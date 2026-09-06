@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 #
 # Org-wide CodeRabbit defaults for the arbiterForge organization.
 #
@@ -32,12 +32,9 @@
 language: en-US
 
 tone_instructions: >-
-  Be terse and specific. Lead with the defect and the concrete failure it
-  causes, not with preamble or praise. State findings as claims that can be
-  checked, and cite the file and line that supports each one. Where a finding
-  is a guess rather than something you verified in the diff, say so plainly
-  rather than asserting it. Do not soften a real problem, and do not inflate a
-  preference into a problem. Skip compliments entirely.
+  Be terse and specific. Lead with the defect, its concrete failure, and the
+  file and line that support it. Mark unverified claims as guesses. Do not
+  soften real problems or inflate preferences into defects. Skip compliments.
 
 reviews:
   # Pinned rather than left implicit. `chill` is the current CodeRabbit
