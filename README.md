@@ -52,11 +52,14 @@ directory so it does not alter a project environment, then run the same checks a
 
 ```sh
 validator_dir="$(mktemp -d)"
-python3 -m pip install --require-hashes --only-binary=:all: \
+python_bin="${PYTHON_BIN:-python3.13}"
+"$python_bin" -m pip install --require-hashes --only-binary=:all: \
   --target "$validator_dir" -r .github/requirements/coderabbit-validator.txt
-PYTHONPATH="$validator_dir" python3 -m unittest discover -s tests -v
-PYTHONPATH="$validator_dir" python3 scripts/validate_coderabbit.py .coderabbit.yaml
+PYTHONPATH="$validator_dir" "$python_bin" -m unittest discover -s tests -v
+PYTHONPATH="$validator_dir" "$python_bin" scripts/validate_coderabbit.py .coderabbit.yaml
 ```
+
+Set `PYTHON_BIN=python3.14` to use the other supported interpreter.
 
 The editor annotation uses CodeRabbit's canonical schema URL. The guard downloads the same bytes
 from CodeRabbit's original public asset at
